@@ -1,0 +1,32 @@
+# Data
+data/raw/
+data/processed/
+
+# Modelos serializados (pesados)
+models/saved/*.joblib
+models/saved/*.pkl
+
+# Reportes generados
+reports/figures/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Kaggle credentials
+kaggle.json
