@@ -6,6 +6,7 @@ Sistema de scoring crediticio end-to-end con scorecard bancaria interpretable, a
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.103-green)
 ![Docker](https://img.shields.io/badge/Docker-ready-blue)
+![Tests](https://github.com/JulioPradenas/credit-scoring-ml/actions/workflows/tests.yml/badge.svg)
 
 ---
 
@@ -23,6 +24,60 @@ docker build -t credit-scoring . && docker run -p 8000:8000 credit-scoring
 ```
 
 Documentación interactiva disponible en `http://localhost:8000/docs`.
+
+---
+
+## Reproducir el proyecto
+
+### 1. Clonar e instalar
+
+```bash
+git clone https://github.com/JulioPradenas/credit-scoring-ml.git
+cd credit-scoring-ml
+pip install -r requirements.txt
+```
+
+### 2. Descargar el dataset
+
+```bash
+# Requiere cuenta en kaggle.com y token en ~/.kaggle/kaggle.json
+pip install kaggle
+kaggle datasets download -d brycecf/give-me-some-credit-dataset -p data/raw/
+unzip data/raw/give-me-some-credit-dataset.zip -d data/raw/
+```
+
+### 3. Ejecutar el pipeline completo
+
+```bash
+# Opción A — notebooks en orden (recomendado para explorar el análisis)
+jupyter notebook
+
+# Opción B — solo entrenar los modelos avanzados directamente
+python3 train_advanced.py
+```
+
+Orden de notebooks: `01_eda` → `02_preprocessing` → `03_baseline` → `04_advanced` → `05_scorecard` → `06_shap` → `07_business`
+
+### 4. Verificar la API
+
+```bash
+uvicorn api.main:app --reload
+
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "applicant_id": "CLI-001",
+    "revolving_util": 0.15, "age": 45, "late_30_59": 0,
+    "debt_ratio": 0.30, "monthly_income": 6000, "open_credit_lines": 7,
+    "late_90plus": 0, "real_estate_loans": 1, "late_60_89": 0, "n_dependents": 2
+  }'
+```
+
+### 5. Correr los tests
+
+```bash
+pytest tests/test_preprocessing.py -v
+```
 
 ---
 
@@ -127,6 +182,23 @@ Ejemplo de tabla scorecard (extracto):
 | Tasa de aprobación (umbral óptimo 0.269) | 55.1% |
 | % de defaults capturados revisando top 20% | 73.3% |
 | Umbral óptimo de negocio | 0.269 |
+
+---
+
+## Fairness Analysis
+
+El modelo fue auditado para detectar sesgo injustificado por grupo de edad (`notebook 06`).
+
+**Default rate real vs. probabilidad predicha por grupo etario (set de test, n=30,000):**
+
+| Grupo de edad | N | Default rate real | P(default) predicha |
+|---|---|---|---|
+| 18–30 | 2,124 | 12.85% | 47.69% |
+| 31–45 | 8,129 | 9.50% | 40.86% |
+| 46–60 | 10,721 | 6.66% | 34.03% |
+| 60+ | 9,026 | 2.73% | 19.58% |
+
+**Conclusión:** El riesgo predicho decrece monotónicamente con la edad, siguiendo la tasa de default real. El modelo captura el patrón legítimo de riesgo crediticio (mayor historial financiero → menor tasa de default) sin introducir discriminación injustificada por edad. Las probabilidades absolutas están infladas por el `scale_pos_weight` aplicado para manejar el desbalanceo de clases — el ranking relativo es correcto.
 
 ---
 
