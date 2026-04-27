@@ -1,5 +1,8 @@
+import pandas as pd
 from pydantic import BaseModel, Field, model_validator
 from typing import Literal
+
+from src.features.engineering import create_features, NUMERIC_FEATURES
 
 
 class ApplicantInput(BaseModel):
@@ -16,15 +19,8 @@ class ApplicantInput(BaseModel):
     late_60_89:        int   = Field(..., ge=0,   le=98,   description="Veces con 60-89 días de atraso")
     n_dependents:      int   = Field(..., ge=0,   le=20,   description="Número de dependientes")
 
-    @model_validator(mode='after')
-    def compute_derived_features(self) -> "ApplicantInput":
-        self._debt_to_income      = self.debt_ratio * self.monthly_income
-        self._total_late_payments = self.late_30_59 + self.late_60_89 + self.late_90plus
-        self._income_per_dependent = self.monthly_income / (self.n_dependents + 1)
-        return self
-
     def to_feature_dict(self) -> dict:
-        return {
+        base = {
             "revolving_util":     self.revolving_util,
             "age":                self.age,
             "late_30_59":         self.late_30_59,
@@ -35,10 +31,9 @@ class ApplicantInput(BaseModel):
             "real_estate_loans":  self.real_estate_loans,
             "late_60_89":         self.late_60_89,
             "n_dependents":       self.n_dependents,
-            "debt_to_income":     self._debt_to_income,
-            "total_late_payments": self._total_late_payments,
-            "income_per_dependent": self._income_per_dependent,
         }
+        row = create_features(pd.DataFrame([base])).iloc[0]
+        return {feat: row[feat] for feat in NUMERIC_FEATURES}
 
 
 class RiskFactor(BaseModel):
