@@ -2,7 +2,7 @@
 
 Sistema de scoring crediticio end-to-end con scorecard bancaria interpretable, análisis SHAP y API de inferencia lista para producción.
 
-![AUC-ROC](https://img.shields.io/badge/AUC--ROC-0.856-blue)
+![AUC-ROC](https://img.shields.io/badge/AUC--ROC-0.866-blue)
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.103-green)
 ![Docker](https://img.shields.io/badge/Docker-ready-blue)
@@ -75,16 +75,14 @@ Documentación interactiva disponible en `http://localhost:8000/docs`.
 
 ## Métricas del modelo
 
-| Métrica | Logistic Reg | Random Forest | XGBoost | LightGBM |
-|---|---|---|---|---|
-| AUC-ROC | — | — | — | — |
-| KS Statistic | — | — | — | — |
-| Gini | — | — | — | — |
-| Brier Score | — | — | — | — |
+| Métrica | Logistic Reg | Random Forest | Gradient Boost | XGBoost | LightGBM | CatBoost |
+|---|---|---|---|---|---|---|
+| AUC-ROC | 0.746 | 0.864 | 0.865 | **0.866** | 0.864 | 0.866 |
+| KS Statistic | 0.391 | 0.567 | 0.567 | **0.574** | 0.572 | 0.569 |
+| Gini | 0.492 | 0.727 | 0.730 | **0.733** | 0.728 | 0.731 |
+| Brier Score | 0.060 | **0.050** | **0.050** | 0.139 | 0.112 | 0.141 |
 
-*Completar después de ejecutar los notebooks de modelado.*
-
-**Modelo campeón:** XGBoost (Optuna 100 trials)  
+**Modelo campeón:** XGBoost (Optuna 100 trials) — AUC-ROC 0.866  
 **Latencia API p95:** < 50ms
 
 ---
@@ -125,12 +123,10 @@ Ejemplo de tabla scorecard (extracto):
 
 | Métrica | Valor |
 |---|---|
-| Valor agregado vs. aprobar todo | — |
-| Tasa de aprobación (umbral óptimo) | — |
-| % de defaults capturados (top 20%) | — |
-| Expected loss banda High (por cliente) | — |
-
-*Completar después de ejecutar `07_business_value_analysis.ipynb`.*
+| Valor agregado vs. aprobar todo | $30,889,500 (set de test) |
+| Tasa de aprobación (umbral óptimo 0.269) | 55.1% |
+| % de defaults capturados revisando top 20% | 73.3% |
+| Umbral óptimo de negocio | 0.269 |
 
 ---
 

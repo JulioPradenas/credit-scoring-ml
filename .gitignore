@@ -28,5 +28,8 @@ venv/
 .idea/
 .vscode/
 
+# CatBoost logs
+catboost_info/
+
 # Kaggle credentials
 kaggle.json
