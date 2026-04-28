@@ -1,0 +1,4 @@
+Banda,Score,Decisión,Default rate est.,Expected loss,% cartera,Acción
+High,< 550,RECHAZAR,16.4%,"$1,643",28.3%,Rechazo automático. Ofrecer producto alternativo.
+Medium,550 – 650,REVISIÓN MANUAL,2.8%,$283,71.5%,Analista revisa documentación. Posible garantía adicional.
+Low,> 650,APROBAR,1.8%,$175,0.2%,Aprobación automática. Ofrecer mejores condiciones.

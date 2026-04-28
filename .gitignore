@@ -2,8 +2,7 @@
 data/raw/
 data/processed/
 
-# Modelos serializados (pesados)
-models/saved/*.joblib
+# Modelos serializados
 models/saved/*.pkl
 
 # Reportes generados

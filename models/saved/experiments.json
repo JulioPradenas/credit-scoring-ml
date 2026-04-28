@@ -1,0 +1,90 @@
+{
+  "baseline": {
+    "champion": "Gradient Boost",
+    "results": {
+      "AUC-ROC": {
+        "Gradient Boost": 0.8651,
+        "Random Forest": 0.8637,
+        "Decision Tree": 0.8521,
+        "LogReg (WoE)": 0.7459
+      },
+      "KS": {
+        "Gradient Boost": 0.5667,
+        "Random Forest": 0.5666,
+        "Decision Tree": 0.5515,
+        "LogReg (WoE)": 0.3906
+      },
+      "Gini": {
+        "Gradient Boost": 0.7301,
+        "Random Forest": 0.7274,
+        "Decision Tree": 0.7041,
+        "LogReg (WoE)": 0.4919
+      },
+      "Brier": {
+        "Gradient Boost": 0.0497,
+        "Random Forest": 0.0496,
+        "Decision Tree": 0.0506,
+        "LogReg (WoE)": 0.0595
+      }
+    },
+    "cv_results": [
+      {
+        "model": "LogReg (WoE)",
+        "CV AUC mean": 0.7494381571693495,
+        "CV AUC std": 0.0062044252044754335
+      },
+      {
+        "model": "Decision Tree",
+        "CV AUC mean": 0.8490941924845308,
+        "CV AUC std": 0.004499307299242385
+      },
+      {
+        "model": "Random Forest",
+        "CV AUC mean": 0.8615866048478044,
+        "CV AUC std": 0.005229001284506263
+      },
+      {
+        "model": "Gradient Boost",
+        "CV AUC mean": 0.8639228188148979,
+        "CV AUC std": 0.005588702756234197
+      }
+    ]
+  },
+  "advanced": {
+    "champion": "XGBoost",
+    "xgb_best_params": {
+      "max_depth": 5,
+      "learning_rate": 0.02035807169277761,
+      "subsample": 0.905793370783296,
+      "colsample_bytree": 0.5661667625576611,
+      "min_child_weight": 19,
+      "reg_alpha": 0.012235520947656321,
+      "reg_lambda": 0.0019253431512022002,
+      "gamma": 3.325961882422659,
+      "n_estimators": 232
+    },
+    "xgb_best_auc": 0.866284930645346,
+    "results": {
+      "AUC-ROC": {
+        "XGBoost": 0.8663,
+        "LightGBM": 0.8641,
+        "CatBoost": 0.8655
+      },
+      "KS": {
+        "XGBoost": 0.5737,
+        "LightGBM": 0.5715,
+        "CatBoost": 0.5693
+      },
+      "Gini": {
+        "XGBoost": 0.7326,
+        "LightGBM": 0.7281,
+        "CatBoost": 0.7311
+      },
+      "Brier": {
+        "XGBoost": 0.1392,
+        "LightGBM": 0.1115,
+        "CatBoost": 0.1406
+      }
+    }
+  }
+}
