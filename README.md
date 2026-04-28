@@ -2,7 +2,7 @@
 
 Sistema de scoring crediticio end-to-end: scorecard bancaria WoE/IV, XGBoost con Optuna, análisis SHAP, FastAPI lista para producción y dashboard interactivo.
 
-**[Live Demo →](https://credit-scoring-ml.streamlit.app)** *(actualizar con URL real tras deploy en Streamlit Cloud)*
+**[Live Demo →](https://credit-scoring-ml-vzrhysf4yc82rka48vzptk.streamlit.app)**
 
 ![AUC-ROC](https://img.shields.io/badge/AUC--ROC-0.866-blue)
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
